@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footy Rater - Football Match Watchability Ratings</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚽ Footy Rater</h1>
+            <p>Rate football matches based on watchability - powered by goals!</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" onclick="showTab('matches')">All Matches</button>
+            <button class="tab-button" onclick="showTab('top-rated')">Top Rated</button>
+            <button class="tab-button" onclick="showTab('premier-league')">Premier League</button>
+            <button class="tab-button" onclick="showTab('champions-league')">Champions League</button>
+            <button class="tab-button" onclick="showTab('fetch-matches')">Fetch Matches</button>
+        </nav>
+
+        <main>
+            <!-- All Matches Tab -->
+            <div id="matches" class="tab-content active">
+                <div class="section-header">
+                    <h2>All Matches</h2>
+                    <button onclick="loadMatches()" class="btn btn-primary">Refresh</button>
+                </div>
+                <div id="matches-list" class="matches-grid">
+                    <div class="loading">Loading matches...</div>
+                </div>
+            </div>
+
+            <!-- Top Rated Tab -->
+            <div id="top-rated" class="tab-content">
+                <div class="section-header">
+                    <h2>Top Rated Matches</h2>
+                    <button onclick="loadTopRated()" class="btn btn-primary">Refresh</button>
+                </div>
+                <div id="top-rated-list" class="matches-grid">
+                    <div class="loading">Loading top rated matches...</div>
+                </div>
+            </div>
+
+            <!-- Premier League Tab -->
+            <div id="premier-league" class="tab-content">
+                <div class="section-header">
+                    <h2>Premier League Matches</h2>
+                    <button onclick="loadCompetitionMatches('Premier League')" class="btn btn-primary">Refresh</button>
+                </div>
+                <div id="premier-league-list" class="matches-grid">
+                    <div class="loading">Loading Premier League matches...</div>
+                </div>
+            </div>
+
+            <!-- Champions League Tab -->
+            <div id="champions-league" class="tab-content">
+                <div class="section-header">
+                    <h2>Champions League Matches</h2>
+                    <button onclick="loadCompetitionMatches('Champions League')" class="btn btn-primary">Refresh</button>
+                </div>
+                <div id="champions-league-list" class="matches-grid">
+                    <div class="loading">Loading Champions League matches...</div>
+                </div>
+            </div>
+
+            <!-- Fetch Matches Tab -->
+            <div id="fetch-matches" class="tab-content">
+                <div class="section-header">
+                    <h2>Fetch New Matches</h2>
+                </div>
+                <div class="fetch-form">
+                    <div class="form-group">
+                        <label for="days">Days to fetch:</label>
+                        <input type="number" id="days" value="7" min="1" max="30">
+                    </div>
+                    <button onclick="fetchMatches()" class="btn btn-success">Fetch & Rate Matches</button>
+                </div>
+                <div id="fetch-results" class="fetch-results"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Footy Rater - Simple football match watchability ratings based on goals</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
