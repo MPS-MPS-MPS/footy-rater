@@ -170,8 +170,46 @@ app.get('/api/rating-categories', (req, res) => {
     });
 });
 
+// Auto-fetch matches on server startup
+async function autoFetchOnStartup() {
+    try {
+        console.log('🚀 Auto-fetching matches on startup...');
+        const matches = await apiService.getRecentMatches(7);
+        
+        console.log(`📋 Found ${matches.length} matches to process`);
+        
+        const ratedMatches = [];
+        for (const match of matches) {
+            // Only process finished matches
+            if (match.status !== 'FINISHED') {
+                console.log(`⏭️ Skipping ${match.homeTeam} vs ${match.awayTeam} - Status: ${match.status}`);
+                continue;
+            }
+            
+            console.log(`⚽ Processing: ${match.homeTeam} vs ${match.awayTeam}`);
+            
+            // Calculate rating
+            const rating = ratingEngine.calculateRating(match);
+            console.log(`📊 Rating: ${rating.totalScore}/100 (${rating.rating})`);
+            
+            // Save to database
+            const matchId = await database.saveMatch(match, rating);
+            console.log(`💾 Saved to database with ID: ${matchId}`);
+            
+            ratedMatches.push({
+                ...match,
+                rating
+            });
+        }
+        
+        console.log(`✅ Successfully processed ${ratedMatches.length} matches on startup`);
+    } catch (error) {
+        console.error('❌ Error during auto-fetch on startup:', error);
+    }
+}
+
 // Start server
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Footy Rater server running on http://localhost:${port}`);
     console.log('Available endpoints:');
     console.log('  GET  /api/matches - Get all matches');
@@ -181,6 +219,9 @@ app.listen(port, () => {
     console.log('  POST /api/matches/fetch - Fetch and rate new matches');
     console.log('  POST /api/rate-match - Calculate rating for a match');
     console.log('  GET  /api/rating-categories - Get rating categories');
+    
+    // Auto-fetch matches on startup
+    await autoFetchOnStartup();
 });
 
 // Graceful shutdown

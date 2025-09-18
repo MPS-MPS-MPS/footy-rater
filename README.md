@@ -5,7 +5,7 @@ A lightweight football match watchability rating system that rates games based o
 ## Features
 
 - **Goal-Based Rating System**: Rates matches purely on goal volume, timing, and distribution
-- **Premier League & Champions League**: Supports both major competitions
+- **Premier League & Champions League**
 - **Real-time API Integration**: Fetches live match data from free APIs
 - **Beautiful Web Interface**: Modern, responsive design
 - **SQLite Database**: Lightweight local storage
@@ -57,14 +57,6 @@ npm install
 npm start
 ```
 
-### 3. Open in Browser
-Navigate to `http://localhost:3000`
-
-### 4. Fetch Sample Data
-- Go to the "Fetch Matches" tab
-- Check "Use sample data (for testing)"
-- Click "Fetch & Rate Matches"
-
 ## API Setup (Optional)
 
 To use real match data instead of sample data:
@@ -74,63 +66,7 @@ To use real match data instead of sample data:
    ```bash
    export FOOTBALL_API_KEY=your_api_key_here
    ```
-3. Uncheck "Use sample data" when fetching matches
 
-## API Endpoints
-
-- `GET /api/matches` - Get all matches
-- `GET /api/matches/competition/:competition` - Get matches by competition
-- `GET /api/matches/top-rated` - Get top rated matches
-- `POST /api/matches/fetch` - Fetch and rate new matches
-- `POST /api/rate-match` - Calculate rating for a match
-- `GET /api/rating-categories` - Get rating categories
-
-## Project Structure
-
-```
-footy-rater/
-├── server.js              # Main server file
-├── ratingEngine.js        # Core rating logic
-├── apiService.js          # Football API integration
-├── database.js            # SQLite database operations
-├── package.json           # Dependencies
-├── public/
-│   ├── index.html         # Web interface
-│   ├── styles.css         # Styling
-│   └── script.js          # Frontend JavaScript
-└── footy_ratings.db       # SQLite database (created automatically)
-```
-
-## Development
-
-### Run in Development Mode
-```bash
-npm run dev
-```
-
-### Example Usage
-
-```javascript
-const FootballRatingEngine = require('./ratingEngine');
-
-const ratingEngine = new FootballRatingEngine();
-
-const matchData = {
-    homeTeam: 'Liverpool',
-    awayTeam: 'Manchester City',
-    homeScore: 4,
-    awayScore: 3,
-    goals: [
-        { team: 'home', minute: 12, scorer: 'Salah' },
-        { team: 'away', minute: 28, scorer: 'Haaland' },
-        // ... more goals
-    ]
-};
-
-const rating = ratingEngine.calculateRating(matchData);
-console.log(rating.totalScore); // 79
-console.log(rating.rating); // "Very Good"
-```
 
 ## Contributing
 

@@ -5,7 +5,7 @@ let ratingCategories = [];
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     loadRatingCategories();
-    loadMatches();
+    autoFetchMatches();
 });
 
 // Tab management
@@ -99,12 +99,9 @@ async function loadCompetitionMatches(competition) {
     }
 }
 
-// Fetch new matches
-async function fetchMatches() {
-    const days = document.getElementById('days').value;
-    const resultsContainer = document.getElementById('fetch-results');
-    
-    resultsContainer.innerHTML = '<div class="loading">Fetching and rating matches...</div>';
+// Auto-fetch matches on page load
+async function autoFetchMatches() {
+    updateStatus('Fetching latest matches...', 'loading');
     
     try {
         const response = await fetch('/api/matches/fetch', {
@@ -112,27 +109,43 @@ async function fetchMatches() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ days: parseInt(days) })
+            body: JSON.stringify({ days: 7 })
         });
         
         const data = await response.json();
         
-        resultsContainer.innerHTML = `
-            <div class="success-message">
-                ${data.message}
-            </div>
-            <div class="matches-grid">
-                ${data.matches.map(match => createMatchCard(match)).join('')}
-            </div>
-        `;
+        updateStatus(`✅ ${data.message}`, 'success');
+        updateLastUpdated();
         
-        // Refresh current tab
-        showTab(currentTab);
+        // Load all tabs with fresh data
+        loadMatches();
+        loadTopRated();
+        loadCompetitionMatches('Premier League');
+        loadCompetitionMatches('Champions League');
         
     } catch (error) {
         console.error('Error fetching matches:', error);
-        resultsContainer.innerHTML = '<div class="error-message">Failed to fetch matches</div>';
+        updateStatus('❌ Failed to fetch matches', 'error');
+        
+        // Still try to load existing data
+        loadMatches();
     }
+}
+
+// Update status bar
+function updateStatus(message, type = '') {
+    const statusBar = document.getElementById('status-bar');
+    const statusText = document.getElementById('status-text');
+    
+    statusText.textContent = message;
+    statusBar.className = `status-bar ${type}`;
+}
+
+// Update last updated timestamp
+function updateLastUpdated() {
+    const lastUpdated = document.getElementById('last-updated');
+    const now = new Date();
+    lastUpdated.textContent = `Last updated: ${now.toLocaleTimeString()}`;
 }
 
 // Display matches in a container

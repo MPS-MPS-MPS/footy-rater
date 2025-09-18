@@ -315,6 +315,41 @@ footer {
 .rating-really-good { background: #10b981; } /* Emerald for really good */
 .rating-unknown { background: #64748b; } /* Keep existing unknown */
 
+/* Status bar */
+.status-bar {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: white;
+}
+
+#status-text {
+    font-weight: 500;
+}
+
+#last-updated {
+    opacity: 0.8;
+    font-size: 0.8rem;
+}
+
+.status-bar.loading #status-text {
+    color: #ffd700;
+}
+
+.status-bar.success #status-text {
+    color: #90ee90;
+}
+
+.status-bar.error #status-text {
+    color: #ffb6c1;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
