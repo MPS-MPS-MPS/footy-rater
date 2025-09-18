@@ -1,83 +1,89 @@
-const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 const path = require('path');
 
-class Database {
+class FootballDatabase {
     constructor() {
-        this.dbPath = path.join(__dirname, 'footy_ratings.db');
-        this.db = null;
+        this.dataDir = path.join(__dirname, 'data');
+        this.matchesFile = path.join(this.dataDir, 'matches.json');
+        this.ratingsFile = path.join(this.dataDir, 'ratings.json');
+        this.matches = [];
+        this.ratings = [];
+        this.nextMatchId = 1;
+        this.nextRatingId = 1;
     }
 
     /**
-     * Initialize database connection and create tables
+     * Initialize database and create data directory
      */
     async initialize() {
-        return new Promise((resolve, reject) => {
-            this.db = new sqlite3.Database(this.dbPath, (err) => {
-                if (err) {
-                    console.error('Error opening database:', err.message);
-                    reject(err);
-                } else {
-                    console.log('Connected to SQLite database');
-                    this.createTables().then(resolve).catch(reject);
-                }
-            });
-        });
+        try {
+            // Create data directory if it doesn't exist
+            if (!fs.existsSync(this.dataDir)) {
+                fs.mkdirSync(this.dataDir, { recursive: true });
+            }
+
+            // Load existing data
+            this.loadData();
+            console.log('Connected to JSON database');
+            return Promise.resolve();
+        } catch (err) {
+            console.error('Error initializing database:', err.message);
+            return Promise.reject(err);
+        }
     }
 
     /**
-     * Create necessary tables
+     * Load data from JSON files
      */
-    async createTables() {
-        return new Promise((resolve, reject) => {
-            const createMatchesTable = `
-                CREATE TABLE IF NOT EXISTS matches (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    api_id INTEGER UNIQUE,
-                    home_team TEXT NOT NULL,
-                    away_team TEXT NOT NULL,
-                    home_score INTEGER NOT NULL,
-                    away_score INTEGER NOT NULL,
-                    date TEXT NOT NULL,
-                    status TEXT NOT NULL,
-                    competition TEXT NOT NULL,
-                    goals TEXT, -- JSON string of goals array
-                    watchability_score INTEGER,
-                    rating_category TEXT,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-            `;
-
-            const createRatingsTable = `
-                CREATE TABLE IF NOT EXISTS ratings (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    match_id INTEGER,
-                    goal_volume_score INTEGER,
-                    goal_timing_score INTEGER,
-                    goal_distribution_score INTEGER,
-                    total_score INTEGER,
-                    rating_category TEXT,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (match_id) REFERENCES matches (id)
-                )
-            `;
-
-            this.db.exec(createMatchesTable + ';' + createRatingsTable, (err) => {
-                if (err) {
-                    console.error('Error creating tables:', err.message);
-                    reject(err);
-                } else {
-                    console.log('Database tables created successfully');
-                    resolve();
+    loadData() {
+        try {
+            // Load matches
+            if (fs.existsSync(this.matchesFile)) {
+                const matchesData = fs.readFileSync(this.matchesFile, 'utf8');
+                this.matches = JSON.parse(matchesData);
+                // Set next ID based on existing data
+                if (this.matches.length > 0) {
+                    this.nextMatchId = Math.max(...this.matches.map(m => m.id)) + 1;
                 }
-            });
-        });
+            }
+
+            // Load ratings
+            if (fs.existsSync(this.ratingsFile)) {
+                const ratingsData = fs.readFileSync(this.ratingsFile, 'utf8');
+                this.ratings = JSON.parse(ratingsData);
+                // Set next ID based on existing data
+                if (this.ratings.length > 0) {
+                    this.nextRatingId = Math.max(...this.ratings.map(r => r.id)) + 1;
+                }
+            }
+
+            console.log(`Loaded ${this.matches.length} matches and ${this.ratings.length} ratings`);
+        } catch (err) {
+            console.error('Error loading data:', err.message);
+            // Initialize empty arrays if files don't exist or are corrupted
+            this.matches = [];
+            this.ratings = [];
+        }
+    }
+
+    /**
+     * Save data to JSON files
+     */
+    saveData() {
+        try {
+            fs.writeFileSync(this.matchesFile, JSON.stringify(this.matches, null, 2));
+            fs.writeFileSync(this.ratingsFile, JSON.stringify(this.ratings, null, 2));
+        } catch (err) {
+            console.error('Error saving data:', err.message);
+            throw err;
+        }
     }
 
     /**
      * Save match and rating data
      */
     async saveMatch(matchData, ratingData) {
-        return new Promise((resolve, reject) => {
+        try {
             const { 
                 id, homeTeam, awayTeam, homeScore, awayScore, 
                 date, status, competition, goals 
@@ -91,430 +97,380 @@ class Database {
             console.log(`💾 Match data:`, { id, homeTeam, awayTeam, competition });
             console.log(`💾 Rating data:`, { totalScore, breakdown, rating });
 
-            const goalsJson = JSON.stringify(goals || []);
-
-            // First check if match already exists
-            const checkMatch = `SELECT id FROM matches WHERE api_id = ?`;
+            // Check if match already exists
+            const existingMatch = this.matches.find(m => m.api_id === id);
             
-            this.db.get(checkMatch, [id], (err, row) => {
-                if (err) {
-                    console.error('❌ Error checking existing match:', err);
-                    reject(err);
-                    return;
-                }
-                
-                if (row) {
-                    console.log(`💾 Match already exists with ID: ${row.id}, skipping insert`);
-                    resolve(row.id);
-                    return;
-                }
-                
-                // Match doesn't exist, insert it
-                const insertMatch = `
-                    INSERT INTO matches 
-                    (api_id, home_team, away_team, home_score, away_score, 
-                     date, status, competition, goals, watchability_score, rating_category)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                `;
+            if (existingMatch) {
+                console.log(`💾 Match already exists with ID: ${existingMatch.id}, skipping insert`);
+                return existingMatch.id;
+            }
+            
+            // Create new match
+            const newMatch = {
+                id: this.nextMatchId++,
+                api_id: id,
+                home_team: homeTeam,
+                away_team: awayTeam,
+                home_score: homeScore,
+                away_score: awayScore,
+                date: date,
+                status: status,
+                competition: competition,
+                goals: JSON.stringify(goals || []),
+                watchability_score: totalScore,
+                rating_category: rating,
+                created_at: new Date().toISOString()
+            };
 
-                const insertRating = `
-                    INSERT INTO ratings 
-                    (match_id, goal_volume_score, goal_timing_score, goal_distribution_score, 
-                     total_score, rating_category)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                `;
+            // Create new rating
+            const newRating = {
+                id: this.nextRatingId++,
+                match_id: newMatch.id,
+                goal_volume_score: breakdown.goalVolume,
+                goal_timing_score: breakdown.goalTiming,
+                goal_distribution_score: breakdown.goalDistribution,
+                total_score: totalScore,
+                rating_category: rating,
+                created_at: new Date().toISOString()
+            };
 
-                    const db = this.db; // Store reference to avoid context issues
-                    db.run(insertMatch, [
-                        id, homeTeam, awayTeam, homeScore, awayScore,
-                        date, status, competition, goalsJson, totalScore, rating
-                    ], function(err) {
-                        if (err) {
-                            console.error('❌ Error inserting match:', err);
-                            reject(err);
-                        } else {
-                            const matchId = this.lastID;
-                            console.log(`💾 Match inserted with ID: ${matchId}`);
-                            
-                            // Insert rating details
-                            db.run(insertRating, [
-                                matchId, breakdown.goalVolume, breakdown.goalTiming,
-                                breakdown.goalDistribution, totalScore, rating
-                            ], (err) => {
-                                if (err) {
-                                    console.error('❌ Error inserting rating:', err);
-                                    reject(err);
-                                } else {
-                                    console.log(`💾 Rating inserted successfully for match ID: ${matchId}`);
-                                    resolve(matchId);
-                                }
-                            });
-                        }
-                    });
-            });
-        });
+            // Add to arrays
+            this.matches.push(newMatch);
+            this.ratings.push(newRating);
+
+            // Save to files
+            this.saveData();
+
+            console.log(`💾 Match inserted with ID: ${newMatch.id}`);
+            console.log(`💾 Rating inserted successfully for match ID: ${newMatch.id}`);
+            
+            return newMatch.id;
+        } catch (err) {
+            console.error('❌ Error saving match:', err);
+            throw err;
+        }
     }
 
     /**
      * Get all matches with ratings
      */
     async getAllMatches() {
-        return new Promise((resolve, reject) => {
-            const query = `
-                SELECT m.*, 
-                       m.watchability_score as total_score,
-                       m.rating_category,
-                       COALESCE(r.goal_volume_score, 0) as goal_volume_score,
-                       COALESCE(r.goal_timing_score, 0) as goal_timing_score,
-                       COALESCE(r.goal_distribution_score, 0) as goal_distribution_score
-                FROM matches m
-                LEFT JOIN ratings r ON m.id = r.match_id
-                ORDER BY m.date DESC
-            `;
-
+        try {
             console.log('🔍 Executing query to get all matches...');
-
-            this.db.all(query, [], (err, rows) => {
-                if (err) {
-                    console.error('❌ Database query error:', err);
-                    reject(err);
-                } else {
-                    console.log(`🔍 Database returned ${rows.length} raw rows`);
+            console.log(`🔍 Database returned ${this.matches.length} raw rows`);
+            
+            const processedMatches = this.matches.map(match => {
+                console.log(`🔍 Processing row: ${match.home_team} vs ${match.away_team}, Rating: ${match.watchability_score}`);
+                
+                // Find corresponding rating
+                const rating = this.ratings.find(r => r.match_id === match.id);
+                
+                // Parse goals and recalculate breakdown if needed
+                const goals = JSON.parse(match.goals || '[]');
+                let breakdown = {
+                    goalVolume: rating?.goal_volume_score || 0,
+                    goalTiming: rating?.goal_timing_score || 0,
+                    goalDistribution: rating?.goal_distribution_score || 0
+                };
+                
+                // If breakdown is all zeros, recalculate it from goals
+                if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
+                    const totalGoals = match.home_score + match.away_score;
                     
-                    const processedMatches = rows.map(row => {
-                        console.log(`🔍 Processing row: ${row.home_team} vs ${row.away_team}, Rating: ${row.total_score}`);
-                        
-                        // Parse goals and recalculate breakdown if needed
-                        const goals = JSON.parse(row.goals || '[]');
-                        let breakdown = {
-                            goalVolume: row.goal_volume_score || 0,
-                            goalTiming: row.goal_timing_score || 0,
-                            goalDistribution: row.goal_distribution_score || 0
-                        };
-                        
-                        // If breakdown is all zeros, recalculate it from goals
-                        if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
-                            const totalGoals = row.home_score + row.away_score;
-                            
-                            // Calculate goal volume score
-                            if (totalGoals === 0) breakdown.goalVolume = 0;
-                            else if (totalGoals === 1) breakdown.goalVolume = 5;
-                            else if (totalGoals === 2) breakdown.goalVolume = 15;
-                            else if (totalGoals === 3) breakdown.goalVolume = 25;
-                            else if (totalGoals === 4) breakdown.goalVolume = 35;
-                            else if (totalGoals === 5) breakdown.goalVolume = 45;
-                            else breakdown.goalVolume = 50;
-                            
-                            // Calculate goal timing score
-                            let timingScore = 0;
-                            goals.forEach(goal => {
-                                const minute = goal.minute || 0;
-                                if (minute <= 15) timingScore += 3;
-                                if (minute >= 75) timingScore += 3;
-                                if (minute >= 90) timingScore += 5;
-                                if (minute >= 80) timingScore += 2;
-                            });
-                            breakdown.goalTiming = Math.min(timingScore, 25);
-                            
-                            // Calculate goal distribution score
-                            let distributionScore = 0;
-                            if (row.home_score > 0 && row.away_score > 0) distributionScore += 15;
-                            
-                            let homeGoals = 0, awayGoals = 0;
-                            goals.forEach(goal => {
-                                if (goal.team === 'home') {
-                                    homeGoals++;
-                                    if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
-                                    if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
-                                    if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
-                                } else if (goal.team === 'away') {
-                                    awayGoals++;
-                                    if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
-                                    if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
-                                    if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
-                                }
-                            });
-                            breakdown.goalDistribution = Math.min(distributionScore, 25);
-                        }
-                        
-                        // Handle rating data
-                        const rating = (row.total_score !== null || row.rating_category !== null) ? {
-                            totalScore: row.total_score || row.watchability_score || 0,
-                            breakdown: breakdown,
-                            category: row.rating_category || 'Unknown'
-                        } : null;
-                        
-                        return {
-                            id: row.id,
-                            apiId: row.api_id,
-                            homeTeam: row.home_team,
-                            awayTeam: row.away_team,
-                            homeScore: row.home_score,
-                            awayScore: row.away_score,
-                            date: row.date,
-                            status: row.status,
-                            competition: row.competition,
-                            goals: JSON.parse(row.goals || '[]'),
-                            rating: rating
-                        };
+                    // Calculate goal volume score
+                    if (totalGoals === 0) breakdown.goalVolume = 0;
+                    else if (totalGoals === 1) breakdown.goalVolume = 5;
+                    else if (totalGoals === 2) breakdown.goalVolume = 15;
+                    else if (totalGoals === 3) breakdown.goalVolume = 25;
+                    else if (totalGoals === 4) breakdown.goalVolume = 35;
+                    else if (totalGoals === 5) breakdown.goalVolume = 45;
+                    else breakdown.goalVolume = 50;
+                    
+                    // Calculate goal timing score
+                    let timingScore = 0;
+                    goals.forEach(goal => {
+                        const minute = goal.minute || 0;
+                        if (minute <= 15) timingScore += 3;
+                        if (minute >= 75) timingScore += 3;
+                        if (minute >= 90) timingScore += 5;
+                        if (minute >= 80) timingScore += 2;
                     });
+                    breakdown.goalTiming = Math.min(timingScore, 25);
                     
-                    console.log(`🔍 Processed ${processedMatches.length} matches for API response`);
-                    resolve(processedMatches);
+                    // Calculate goal distribution score
+                    let distributionScore = 0;
+                    if (match.home_score > 0 && match.away_score > 0) distributionScore += 15;
+                    
+                    let homeGoals = 0, awayGoals = 0;
+                    goals.forEach(goal => {
+                        if (goal.team === 'home') {
+                            homeGoals++;
+                            if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
+                            if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
+                            if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
+                        } else if (goal.team === 'away') {
+                            awayGoals++;
+                            if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
+                            if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
+                            if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
+                        }
+                    });
+                    breakdown.goalDistribution = Math.min(distributionScore, 25);
                 }
+                
+                // Handle rating data
+                const ratingData = (match.watchability_score !== null || match.rating_category !== null) ? {
+                    totalScore: match.watchability_score || 0,
+                    breakdown: breakdown,
+                    category: match.rating_category || 'Unknown'
+                } : null;
+                
+                return {
+                    id: match.id,
+                    apiId: match.api_id,
+                    homeTeam: match.home_team,
+                    awayTeam: match.away_team,
+                    homeScore: match.home_score,
+                    awayScore: match.away_score,
+                    date: match.date,
+                    status: match.status,
+                    competition: match.competition,
+                    goals: JSON.parse(match.goals || '[]'),
+                    rating: ratingData
+                };
             });
-        });
+            
+            // Sort by date descending
+            processedMatches.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            console.log(`🔍 Processed ${processedMatches.length} matches for API response`);
+            return processedMatches;
+        } catch (err) {
+            console.error('❌ Database query error:', err);
+            throw err;
+        }
     }
 
     /**
      * Get matches by competition
      */
     async getMatchesByCompetition(competition) {
-        return new Promise((resolve, reject) => {
-            // Handle different competition name variations
-            let competitionFilter;
-            if (competition === 'Champions League') {
-                competitionFilter = "m.competition LIKE '%Champions League%'";
-            } else if (competition === 'Premier League') {
-                competitionFilter = "m.competition LIKE '%Premier League%'";
-            } else {
-                competitionFilter = "m.competition = ?";
-            }
-
-            const query = `
-                SELECT m.*, 
-                       m.watchability_score as total_score,
-                       m.rating_category,
-                       COALESCE(r.goal_volume_score, 0) as goal_volume_score,
-                       COALESCE(r.goal_timing_score, 0) as goal_timing_score,
-                       COALESCE(r.goal_distribution_score, 0) as goal_distribution_score
-                FROM matches m
-                LEFT JOIN ratings r ON m.id = r.match_id
-                WHERE ${competitionFilter}
-                ORDER BY m.date DESC
-            `;
-
+        try {
             console.log('🔍 Executing query to get matches by competition...');
-
-            const queryParams = competitionFilter.includes('?') ? [competition] : [];
-            this.db.all(query, queryParams, (err, rows) => {
-                if (err) {
-                    console.error('❌ Database query error:', err);
-                    reject(err);
-                } else {
-                    console.log(`🔍 Database returned ${rows.length} raw rows for ${competition}`);
+            
+            let filteredMatches = this.matches;
+            
+            // Handle different competition name variations
+            if (competition === 'Champions League') {
+                filteredMatches = this.matches.filter(m => m.competition.includes('Champions League'));
+            } else if (competition === 'Premier League') {
+                filteredMatches = this.matches.filter(m => m.competition.includes('Premier League'));
+            } else {
+                filteredMatches = this.matches.filter(m => m.competition === competition);
+            }
+            
+            console.log(`🔍 Database returned ${filteredMatches.length} raw rows for ${competition}`);
+            
+            const processedMatches = filteredMatches.map(match => {
+                console.log(`🔍 Processing row: ${match.home_team} vs ${match.away_team}, Rating: ${match.watchability_score}`);
+                
+                // Find corresponding rating
+                const rating = this.ratings.find(r => r.match_id === match.id);
+                
+                // Parse goals and recalculate breakdown if needed
+                const goals = JSON.parse(match.goals || '[]');
+                let breakdown = {
+                    goalVolume: rating?.goal_volume_score || 0,
+                    goalTiming: rating?.goal_timing_score || 0,
+                    goalDistribution: rating?.goal_distribution_score || 0
+                };
+                
+                // If breakdown is all zeros, recalculate it from goals
+                if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
+                    const totalGoals = match.home_score + match.away_score;
                     
-                    const processedMatches = rows.map(row => {
-                        console.log(`🔍 Processing row: ${row.home_team} vs ${row.away_team}, Rating: ${row.total_score}`);
-                        
-                        // Parse goals and recalculate breakdown if needed
-                        const goals = JSON.parse(row.goals || '[]');
-                        let breakdown = {
-                            goalVolume: row.goal_volume_score || 0,
-                            goalTiming: row.goal_timing_score || 0,
-                            goalDistribution: row.goal_distribution_score || 0
-                        };
-                        
-                        // If breakdown is all zeros, recalculate it from goals
-                        if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
-                            const totalGoals = row.home_score + row.away_score;
-                            
-                            // Calculate goal volume score
-                            if (totalGoals === 0) breakdown.goalVolume = 0;
-                            else if (totalGoals === 1) breakdown.goalVolume = 5;
-                            else if (totalGoals === 2) breakdown.goalVolume = 15;
-                            else if (totalGoals === 3) breakdown.goalVolume = 25;
-                            else if (totalGoals === 4) breakdown.goalVolume = 35;
-                            else if (totalGoals === 5) breakdown.goalVolume = 45;
-                            else breakdown.goalVolume = 50;
-                            
-                            // Calculate goal timing score
-                            let timingScore = 0;
-                            goals.forEach(goal => {
-                                const minute = goal.minute || 0;
-                                if (minute <= 15) timingScore += 3;
-                                if (minute >= 75) timingScore += 3;
-                                if (minute >= 90) timingScore += 5;
-                                if (minute >= 80) timingScore += 2;
-                            });
-                            breakdown.goalTiming = Math.min(timingScore, 25);
-                            
-                            // Calculate goal distribution score
-                            let distributionScore = 0;
-                            if (row.home_score > 0 && row.away_score > 0) distributionScore += 15;
-                            
-                            let homeGoals = 0, awayGoals = 0;
-                            goals.forEach(goal => {
-                                if (goal.team === 'home') {
-                                    homeGoals++;
-                                    if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
-                                    if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
-                                    if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
-                                } else if (goal.team === 'away') {
-                                    awayGoals++;
-                                    if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
-                                    if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
-                                    if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
-                                }
-                            });
-                            breakdown.goalDistribution = Math.min(distributionScore, 25);
-                        }
-                        
-                        // Handle rating data
-                        const rating = (row.total_score !== null || row.rating_category !== null) ? {
-                            totalScore: row.total_score || row.watchability_score || 0,
-                            breakdown: breakdown,
-                            category: row.rating_category || 'Unknown'
-                        } : null;
-                        
-                        return {
-                            id: row.id,
-                            apiId: row.api_id,
-                            homeTeam: row.home_team,
-                            awayTeam: row.away_team,
-                            homeScore: row.home_score,
-                            awayScore: row.away_score,
-                            date: row.date,
-                            status: row.status,
-                            competition: row.competition,
-                            goals: JSON.parse(row.goals || '[]'),
-                            rating: rating
-                        };
+                    // Calculate goal volume score
+                    if (totalGoals === 0) breakdown.goalVolume = 0;
+                    else if (totalGoals === 1) breakdown.goalVolume = 5;
+                    else if (totalGoals === 2) breakdown.goalVolume = 15;
+                    else if (totalGoals === 3) breakdown.goalVolume = 25;
+                    else if (totalGoals === 4) breakdown.goalVolume = 35;
+                    else if (totalGoals === 5) breakdown.goalVolume = 45;
+                    else breakdown.goalVolume = 50;
+                    
+                    // Calculate goal timing score
+                    let timingScore = 0;
+                    goals.forEach(goal => {
+                        const minute = goal.minute || 0;
+                        if (minute <= 15) timingScore += 3;
+                        if (minute >= 75) timingScore += 3;
+                        if (minute >= 90) timingScore += 5;
+                        if (minute >= 80) timingScore += 2;
                     });
+                    breakdown.goalTiming = Math.min(timingScore, 25);
                     
-                    console.log(`🔍 Processed ${processedMatches.length} matches for ${competition}`);
-                    resolve(processedMatches);
+                    // Calculate goal distribution score
+                    let distributionScore = 0;
+                    if (match.home_score > 0 && match.away_score > 0) distributionScore += 15;
+                    
+                    let homeGoals = 0, awayGoals = 0;
+                    goals.forEach(goal => {
+                        if (goal.team === 'home') {
+                            homeGoals++;
+                            if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
+                            if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
+                            if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
+                        } else if (goal.team === 'away') {
+                            awayGoals++;
+                            if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
+                            if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
+                            if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
+                        }
+                    });
+                    breakdown.goalDistribution = Math.min(distributionScore, 25);
                 }
+                
+                // Handle rating data
+                const ratingData = (match.watchability_score !== null || match.rating_category !== null) ? {
+                    totalScore: match.watchability_score || 0,
+                    breakdown: breakdown,
+                    category: match.rating_category || 'Unknown'
+                } : null;
+                
+                return {
+                    id: match.id,
+                    apiId: match.api_id,
+                    homeTeam: match.home_team,
+                    awayTeam: match.away_team,
+                    homeScore: match.home_score,
+                    awayScore: match.away_score,
+                    date: match.date,
+                    status: match.status,
+                    competition: match.competition,
+                    goals: JSON.parse(match.goals || '[]'),
+                    rating: ratingData
+                };
             });
-        });
+            
+            // Sort by date descending
+            processedMatches.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            console.log(`🔍 Processed ${processedMatches.length} matches for ${competition}`);
+            return processedMatches;
+        } catch (err) {
+            console.error('❌ Database query error:', err);
+            throw err;
+        }
     }
 
     /**
      * Get top rated matches
      */
     async getTopRatedMatches(limit = 10) {
-        return new Promise((resolve, reject) => {
-            const query = `
-                SELECT m.*, 
-                       m.watchability_score as total_score,
-                       m.rating_category,
-                       COALESCE(r.goal_volume_score, 0) as goal_volume_score,
-                       COALESCE(r.goal_timing_score, 0) as goal_timing_score,
-                       COALESCE(r.goal_distribution_score, 0) as goal_distribution_score
-                FROM matches m
-                LEFT JOIN ratings r ON m.id = r.match_id
-                ORDER BY m.watchability_score DESC
-                LIMIT ?
-            `;
-
+        try {
             console.log('🔍 Executing query to get top rated matches...');
-
-            this.db.all(query, [limit], (err, rows) => {
-                if (err) {
-                    console.error('❌ Database query error:', err);
-                    reject(err);
-                } else {
-                    console.log(`🔍 Database returned ${rows.length} raw rows for top rated`);
+            
+            // Sort matches by watchability score descending
+            const sortedMatches = [...this.matches].sort((a, b) => (b.watchability_score || 0) - (a.watchability_score || 0));
+            const topMatches = sortedMatches.slice(0, limit);
+            
+            console.log(`🔍 Database returned ${topMatches.length} raw rows for top rated`);
+            
+            const processedMatches = topMatches.map(match => {
+                console.log(`🔍 Processing row: ${match.home_team} vs ${match.away_team}, Rating: ${match.watchability_score}`);
+                
+                // Find corresponding rating
+                const rating = this.ratings.find(r => r.match_id === match.id);
+                
+                // Parse goals and recalculate breakdown if needed
+                const goals = JSON.parse(match.goals || '[]');
+                let breakdown = {
+                    goalVolume: rating?.goal_volume_score || 0,
+                    goalTiming: rating?.goal_timing_score || 0,
+                    goalDistribution: rating?.goal_distribution_score || 0
+                };
+                
+                // If breakdown is all zeros, recalculate it from goals
+                if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
+                    const totalGoals = match.home_score + match.away_score;
                     
-                    const processedMatches = rows.map(row => {
-                        console.log(`🔍 Processing row: ${row.home_team} vs ${row.away_team}, Rating: ${row.total_score}`);
-                        
-                        // Parse goals and recalculate breakdown if needed
-                        const goals = JSON.parse(row.goals || '[]');
-                        let breakdown = {
-                            goalVolume: row.goal_volume_score || 0,
-                            goalTiming: row.goal_timing_score || 0,
-                            goalDistribution: row.goal_distribution_score || 0
-                        };
-                        
-                        // If breakdown is all zeros, recalculate it from goals
-                        if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
-                            const totalGoals = row.home_score + row.away_score;
-                            
-                            // Calculate goal volume score
-                            if (totalGoals === 0) breakdown.goalVolume = 0;
-                            else if (totalGoals === 1) breakdown.goalVolume = 5;
-                            else if (totalGoals === 2) breakdown.goalVolume = 15;
-                            else if (totalGoals === 3) breakdown.goalVolume = 25;
-                            else if (totalGoals === 4) breakdown.goalVolume = 35;
-                            else if (totalGoals === 5) breakdown.goalVolume = 45;
-                            else breakdown.goalVolume = 50;
-                            
-                            // Calculate goal timing score
-                            let timingScore = 0;
-                            goals.forEach(goal => {
-                                const minute = goal.minute || 0;
-                                if (minute <= 15) timingScore += 3;
-                                if (minute >= 75) timingScore += 3;
-                                if (minute >= 90) timingScore += 5;
-                                if (minute >= 80) timingScore += 2;
-                            });
-                            breakdown.goalTiming = Math.min(timingScore, 25);
-                            
-                            // Calculate goal distribution score
-                            let distributionScore = 0;
-                            if (row.home_score > 0 && row.away_score > 0) distributionScore += 15;
-                            
-                            let homeGoals = 0, awayGoals = 0;
-                            goals.forEach(goal => {
-                                if (goal.team === 'home') {
-                                    homeGoals++;
-                                    if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
-                                    if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
-                                    if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
-                                } else if (goal.team === 'away') {
-                                    awayGoals++;
-                                    if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
-                                    if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
-                                    if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
-                                }
-                            });
-                            breakdown.goalDistribution = Math.min(distributionScore, 25);
-                        }
-                        
-                        // Handle rating data
-                        const rating = (row.total_score !== null || row.rating_category !== null) ? {
-                            totalScore: row.total_score || row.watchability_score || 0,
-                            breakdown: breakdown,
-                            category: row.rating_category || 'Unknown'
-                        } : null;
-                        
-                        return {
-                            id: row.id,
-                            apiId: row.api_id,
-                            homeTeam: row.home_team,
-                            awayTeam: row.away_team,
-                            homeScore: row.home_score,
-                            awayScore: row.away_score,
-                            date: row.date,
-                            status: row.status,
-                            competition: row.competition,
-                            goals: JSON.parse(row.goals || '[]'),
-                            rating: rating
-                        };
+                    // Calculate goal volume score
+                    if (totalGoals === 0) breakdown.goalVolume = 0;
+                    else if (totalGoals === 1) breakdown.goalVolume = 5;
+                    else if (totalGoals === 2) breakdown.goalVolume = 15;
+                    else if (totalGoals === 3) breakdown.goalVolume = 25;
+                    else if (totalGoals === 4) breakdown.goalVolume = 35;
+                    else if (totalGoals === 5) breakdown.goalVolume = 45;
+                    else breakdown.goalVolume = 50;
+                    
+                    // Calculate goal timing score
+                    let timingScore = 0;
+                    goals.forEach(goal => {
+                        const minute = goal.minute || 0;
+                        if (minute <= 15) timingScore += 3;
+                        if (minute >= 75) timingScore += 3;
+                        if (minute >= 90) timingScore += 5;
+                        if (minute >= 80) timingScore += 2;
                     });
+                    breakdown.goalTiming = Math.min(timingScore, 25);
                     
-                    console.log(`🔍 Processed ${processedMatches.length} top rated matches`);
-                    resolve(processedMatches);
+                    // Calculate goal distribution score
+                    let distributionScore = 0;
+                    if (match.home_score > 0 && match.away_score > 0) distributionScore += 15;
+                    
+                    let homeGoals = 0, awayGoals = 0;
+                    goals.forEach(goal => {
+                        if (goal.team === 'home') {
+                            homeGoals++;
+                            if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
+                            if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
+                            if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
+                        } else if (goal.team === 'away') {
+                            awayGoals++;
+                            if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
+                            if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
+                            if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
+                        }
+                    });
+                    breakdown.goalDistribution = Math.min(distributionScore, 25);
                 }
+                
+                // Handle rating data
+                const ratingData = (match.watchability_score !== null || match.rating_category !== null) ? {
+                    totalScore: match.watchability_score || 0,
+                    breakdown: breakdown,
+                    category: match.rating_category || 'Unknown'
+                } : null;
+                
+                return {
+                    id: match.id,
+                    apiId: match.api_id,
+                    homeTeam: match.home_team,
+                    awayTeam: match.away_team,
+                    homeScore: match.home_score,
+                    awayScore: match.away_score,
+                    date: match.date,
+                    status: match.status,
+                    competition: match.competition,
+                    goals: JSON.parse(match.goals || '[]'),
+                    rating: ratingData
+                };
             });
-        });
+            
+            console.log(`🔍 Processed ${processedMatches.length} top rated matches`);
+            return processedMatches;
+        } catch (err) {
+            console.error('❌ Database query error:', err);
+            throw err;
+        }
     }
 
     /**
-     * Close database connection
+     * Close database connection (no-op for JSON database)
      */
     close() {
-        if (this.db) {
-            this.db.close((err) => {
-                if (err) {
-                    console.error('Error closing database:', err.message);
-                } else {
-                    console.log('Database connection closed');
-                }
-            });
-        }
+        console.log('Database connection closed');
     }
 }
 
-module.exports = Database;
+module.exports = FootballDatabase;

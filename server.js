@@ -3,7 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const FootballRatingEngine = require('./ratingEngine');
 const FootballAPIService = require('./apiService');
-const Database = require('./database');
+const FootballDatabase = require('./database');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,7 +16,7 @@ app.use(express.static('public'));
 // Initialize services
 const ratingEngine = new FootballRatingEngine();
 const apiService = new FootballAPIService();
-const database = new Database();
+const database = new FootballDatabase();
 
 // Initialize database
 database.initialize().catch(console.error);
