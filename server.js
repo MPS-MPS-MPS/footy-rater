@@ -11,7 +11,19 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+
+// Serve static files with proper MIME types
+app.use(express.static('public', {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        } else if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        } else if (path.endsWith('.svg')) {
+            res.setHeader('Content-Type', 'image/svg+xml');
+        }
+    }
+}));
 
 // Initialize services
 const ratingEngine = new FootballRatingEngine();
@@ -19,11 +31,56 @@ const apiService = new FootballAPIService();
 const database = new FootballDatabase();
 
 // Initialize database
-database.initialize().catch(console.error);
+let dbInitialized = false;
+database.initialize()
+    .then(() => {
+        dbInitialized = true;
+        console.log('Database initialized successfully');
+    })
+    .catch((err) => {
+        console.error('Database initialization failed:', err);
+        dbInitialized = false;
+    });
+
+// Middleware to check database initialization
+app.use('/api', (req, res, next) => {
+    if (!dbInitialized) {
+        return res.status(503).json({ 
+            error: 'Database not initialized yet', 
+            message: 'Please wait a moment and try again' 
+        });
+    }
+    next();
+});
+
+// Explicit static file routes
+app.get('/script.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, 'public', 'script.js'));
+});
+
+app.get('/styles.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, 'public', 'styles.css'));
+});
+
+app.get('/favicon.svg', (req, res) => {
+    res.setHeader('Content-Type', 'image/svg+xml');
+    res.sendFile(path.join(__dirname, 'public', 'favicon.svg'));
+});
 
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        database: dbInitialized ? 'initialized' : 'not initialized',
+        timestamp: new Date().toISOString()
+    });
 });
 
 // Get all matches with ratings

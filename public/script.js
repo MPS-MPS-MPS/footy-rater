@@ -4,9 +4,27 @@ let ratingCategories = [];
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    checkHealth();
     loadRatingCategories();
     autoFetchMatches();
 });
+
+// Check server health
+async function checkHealth() {
+    try {
+        console.log('Checking server health...');
+        const response = await fetch('/api/health');
+        const health = await response.json();
+        console.log('Health check:', health);
+        
+        if (health.database === 'not initialized') {
+            updateStatus('Database initializing...', 'loading');
+        }
+    } catch (error) {
+        console.error('Health check failed:', error);
+        updateStatus('Server connection failed', 'error');
+    }
+}
 
 // Tab management
 function showTab(tabName) {
@@ -60,12 +78,26 @@ async function loadMatches() {
     container.innerHTML = '<div class="loading">Loading matches...</div>';
     
     try {
+        console.log('Fetching matches from:', '/api/matches');
         const response = await fetch('/api/matches');
+        console.log('Response status:', response.status);
+        
+        if (response.status === 503) {
+            const errorData = await response.json();
+            container.innerHTML = `<div class="error-message">Database initializing... Please wait a moment and refresh.</div>`;
+            return;
+        }
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const matches = await response.json();
+        console.log('Received matches:', matches.length);
         displayMatches(matches, container);
     } catch (error) {
         console.error('Error loading matches:', error);
-        container.innerHTML = '<div class="error-message">Failed to load matches</div>';
+        container.innerHTML = `<div class="error-message">Failed to load matches: ${error.message}</div>`;
     }
 }
 
@@ -104,6 +136,7 @@ async function autoFetchMatches() {
     updateStatus('Fetching latest matches...', 'loading');
     
     try {
+        console.log('Auto-fetching matches...');
         const response = await fetch('/api/matches/fetch', {
             method: 'POST',
             headers: {
@@ -112,7 +145,14 @@ async function autoFetchMatches() {
             body: JSON.stringify({ days: 7 })
         });
         
+        console.log('Auto-fetch response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log('Auto-fetch data:', data);
         
         updateStatus(`✅ ${data.message}`, 'success');
         updateLastUpdated();
@@ -125,7 +165,7 @@ async function autoFetchMatches() {
         
     } catch (error) {
         console.error('Error fetching matches:', error);
-        updateStatus('❌ Failed to fetch matches', 'error');
+        updateStatus(`❌ Failed to fetch matches: ${error.message}`, 'error');
         
         // Still try to load existing data
         loadMatches();
