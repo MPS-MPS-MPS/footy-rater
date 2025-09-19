@@ -173,50 +173,7 @@ class FootballDatabase {
                     goalDistribution: rating?.goal_distribution_score || 0
                 };
                 
-                // If breakdown is all zeros, recalculate it from goals
-                if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
-                    const totalGoals = match.home_score + match.away_score;
-                    
-                    // Calculate goal volume score
-                    if (totalGoals === 0) breakdown.goalVolume = 0;
-                    else if (totalGoals === 1) breakdown.goalVolume = 5;
-                    else if (totalGoals === 2) breakdown.goalVolume = 15;
-                    else if (totalGoals === 3) breakdown.goalVolume = 25;
-                    else if (totalGoals === 4) breakdown.goalVolume = 35;
-                    else if (totalGoals === 5) breakdown.goalVolume = 45;
-                    else breakdown.goalVolume = 50;
-                    
-                    // Calculate goal timing score
-                    let timingScore = 0;
-                    goals.forEach(goal => {
-                        const minute = goal.minute || 0;
-                        if (minute <= 15) timingScore += 3;
-                        if (minute >= 75) timingScore += 3;
-                        if (minute >= 90) timingScore += 5;
-                        if (minute >= 80) timingScore += 2;
-                    });
-                    breakdown.goalTiming = Math.min(timingScore, 25);
-                    
-                    // Calculate goal distribution score
-                    let distributionScore = 0;
-                    if (match.home_score > 0 && match.away_score > 0) distributionScore += 15;
-                    
-                    let homeGoals = 0, awayGoals = 0;
-                    goals.forEach(goal => {
-                        if (goal.team === 'home') {
-                            homeGoals++;
-                            if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
-                            if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
-                            if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
-                        } else if (goal.team === 'away') {
-                            awayGoals++;
-                            if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
-                            if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
-                            if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
-                        }
-                    });
-                    breakdown.goalDistribution = Math.min(distributionScore, 25);
-                }
+                // Use stored breakdown data - don't recalculate
                 
                 // Handle rating data
                 const ratingData = (match.watchability_score !== null || match.rating_category !== null) ? {
@@ -285,50 +242,7 @@ class FootballDatabase {
                     goalDistribution: rating?.goal_distribution_score || 0
                 };
                 
-                // If breakdown is all zeros, recalculate it from goals
-                if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
-                    const totalGoals = match.home_score + match.away_score;
-                    
-                    // Calculate goal volume score
-                    if (totalGoals === 0) breakdown.goalVolume = 0;
-                    else if (totalGoals === 1) breakdown.goalVolume = 5;
-                    else if (totalGoals === 2) breakdown.goalVolume = 15;
-                    else if (totalGoals === 3) breakdown.goalVolume = 25;
-                    else if (totalGoals === 4) breakdown.goalVolume = 35;
-                    else if (totalGoals === 5) breakdown.goalVolume = 45;
-                    else breakdown.goalVolume = 50;
-                    
-                    // Calculate goal timing score
-                    let timingScore = 0;
-                    goals.forEach(goal => {
-                        const minute = goal.minute || 0;
-                        if (minute <= 15) timingScore += 3;
-                        if (minute >= 75) timingScore += 3;
-                        if (minute >= 90) timingScore += 5;
-                        if (minute >= 80) timingScore += 2;
-                    });
-                    breakdown.goalTiming = Math.min(timingScore, 25);
-                    
-                    // Calculate goal distribution score
-                    let distributionScore = 0;
-                    if (match.home_score > 0 && match.away_score > 0) distributionScore += 15;
-                    
-                    let homeGoals = 0, awayGoals = 0;
-                    goals.forEach(goal => {
-                        if (goal.team === 'home') {
-                            homeGoals++;
-                            if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
-                            if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
-                            if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
-                        } else if (goal.team === 'away') {
-                            awayGoals++;
-                            if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
-                            if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
-                            if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
-                        }
-                    });
-                    breakdown.goalDistribution = Math.min(distributionScore, 25);
-                }
+                // Use stored breakdown data - don't recalculate
                 
                 // Handle rating data
                 const ratingData = (match.watchability_score !== null || match.rating_category !== null) ? {
@@ -390,50 +304,7 @@ class FootballDatabase {
                     goalDistribution: rating?.goal_distribution_score || 0
                 };
                 
-                // If breakdown is all zeros, recalculate it from goals
-                if (breakdown.goalVolume === 0 && breakdown.goalTiming === 0 && breakdown.goalDistribution === 0 && goals.length > 0) {
-                    const totalGoals = match.home_score + match.away_score;
-                    
-                    // Calculate goal volume score
-                    if (totalGoals === 0) breakdown.goalVolume = 0;
-                    else if (totalGoals === 1) breakdown.goalVolume = 5;
-                    else if (totalGoals === 2) breakdown.goalVolume = 15;
-                    else if (totalGoals === 3) breakdown.goalVolume = 25;
-                    else if (totalGoals === 4) breakdown.goalVolume = 35;
-                    else if (totalGoals === 5) breakdown.goalVolume = 45;
-                    else breakdown.goalVolume = 50;
-                    
-                    // Calculate goal timing score
-                    let timingScore = 0;
-                    goals.forEach(goal => {
-                        const minute = goal.minute || 0;
-                        if (minute <= 15) timingScore += 3;
-                        if (minute >= 75) timingScore += 3;
-                        if (minute >= 90) timingScore += 5;
-                        if (minute >= 80) timingScore += 2;
-                    });
-                    breakdown.goalTiming = Math.min(timingScore, 25);
-                    
-                    // Calculate goal distribution score
-                    let distributionScore = 0;
-                    if (match.home_score > 0 && match.away_score > 0) distributionScore += 15;
-                    
-                    let homeGoals = 0, awayGoals = 0;
-                    goals.forEach(goal => {
-                        if (goal.team === 'home') {
-                            homeGoals++;
-                            if (homeGoals > awayGoals && awayGoals > 0) distributionScore += 4;
-                            if (homeGoals === awayGoals && awayGoals > 0) distributionScore += 3;
-                            if (goal.minute >= 80 && homeGoals > awayGoals) distributionScore += 2;
-                        } else if (goal.team === 'away') {
-                            awayGoals++;
-                            if (awayGoals > homeGoals && homeGoals > 0) distributionScore += 4;
-                            if (awayGoals === homeGoals && homeGoals > 0) distributionScore += 3;
-                            if (goal.minute >= 80 && awayGoals > homeGoals) distributionScore += 2;
-                        }
-                    });
-                    breakdown.goalDistribution = Math.min(distributionScore, 25);
-                }
+                // Use stored breakdown data - don't recalculate
                 
                 // Handle rating data
                 const ratingData = (match.watchability_score !== null || match.rating_category !== null) ? {

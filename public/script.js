@@ -201,8 +201,19 @@ function displayMatches(matches, container) {
 // Create a match card HTML
 function createMatchCard(match) {
     const rating = match.rating || { totalScore: 0, category: 'Unknown', breakdown: { goalVolume: 0, goalTiming: 0, goalDistribution: 0 } };
-    const categoryClass = rating.category ? `rating-${rating.category.toLowerCase().replace(' ', '-')}` : 'rating-unknown';
+    const categoryClass = rating.category ? `rating-${rating.category.toLowerCase().replace(/\s+/g, '-')}` : 'rating-unknown';
     const date = new Date(match.date).toLocaleDateString();
+    
+    // Debug logging for Eintracht match
+    if (match.homeTeam && match.homeTeam.includes('Eintracht')) {
+        console.log('🔍 Eintracht match debug:', {
+            homeTeam: match.homeTeam,
+            rating: rating,
+            category: rating.category,
+            categoryClass: categoryClass,
+            totalScore: rating.totalScore
+        });
+    }
     
     return `
         <div class="match-card">

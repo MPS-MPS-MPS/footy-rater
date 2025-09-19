@@ -301,19 +301,13 @@ footer {
 }
 
 /* Rating category colors */
-.rating-excellent { background: #22c55e; }
-.rating-very-good { background: #84cc16; }
-.rating-good { background: #eab308; }
-.rating-average { background: #f97316; }
-.rating-poor { background: #ef4444; }
-.rating-very-poor { background: #dc2626; }
-.rating-unknown { background: #64748b; }
-
-/* New rating category colors */
-.rating-all-time-legendary { background: #8b5cf6; } /* Purple for legendary */
-.rating-amazing { background: #06b6d4; } /* Cyan for amazing */
-.rating-really-good { background: #10b981; } /* Emerald for really good */
-.rating-unknown { background: #64748b; } /* Keep existing unknown */
+.rating-all-time-legendary { background: #8b5cf6; color: white; } /* Purple for legendary */
+.rating-amazing { background: #06b6d4; color: white; } /* Cyan for amazing */
+.rating-really-good { background: #6aca3e; color: white; } /* Emerald for really good */
+.rating-good { background: #028b24; color: white; } /* Yellow for good */
+.rating-average { background: #f97316; color: white; } /* Orange for average */
+.rating-very-poor { background: #dc2626; color: white; } /* Red for very poor */
+.rating-unknown { background: #64748b; color: white; } /* Gray for unknown */
 
 /* Status bar */
 .status-bar {

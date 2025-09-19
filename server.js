@@ -133,11 +133,24 @@ app.post('/api/matches/fetch', async (req, res) => {
         const { days = 7 } = req.body;
         console.log(`🔄 Fetching matches - Days: ${days}`);
         
-        // Fetch from real API
+        // Fetch from real API with error handling
         console.log('🌐 Fetching from real API...');
-        const matches = await apiService.getRecentMatches(days);
+        let matches = [];
+        let fetchError = null;
         
-        console.log(`📋 Found ${matches.length} matches to process`);
+        try {
+            const fetchPromise = apiService.getRecentMatches(days);
+            const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('API timeout')), 10000)
+            );
+            
+            matches = await Promise.race([fetchPromise, timeoutPromise]);
+            console.log(`📋 Found ${matches.length} matches to process`);
+        } catch (apiError) {
+            console.error('❌ API fetch failed:', apiError.message);
+            fetchError = apiError.message;
+            matches = []; // Continue with empty array
+        }
         
         const ratedMatches = [];
         
@@ -167,12 +180,29 @@ app.post('/api/matches/fetch', async (req, res) => {
         console.log(`✅ Successfully processed ${ratedMatches.length} matches`);
         
         res.json({
-            message: `Processed ${ratedMatches.length} matches`,
-            matches: ratedMatches
+            message: fetchError ? 
+                `API fetch failed: ${fetchError}. Processed ${ratedMatches.length} existing matches.` : 
+                `Processed ${ratedMatches.length} matches`,
+            matches: ratedMatches,
+            apiError: fetchError
         });
     } catch (error) {
-        console.error('❌ Error fetching and rating matches:', error);
-        res.status(500).json({ error: 'Failed to fetch and rate matches' });
+        console.error('❌ Error in fetch endpoint:', error);
+        // Return existing matches even if there's an error
+        try {
+            const existingMatches = await database.getAllMatches();
+            res.json({
+                message: `Error occurred: ${error.message}. Showing ${existingMatches.length} existing matches.`,
+                matches: existingMatches,
+                error: error.message
+            });
+        } catch (dbError) {
+            res.json({
+                message: 'Error occurred and could not fetch existing matches',
+                matches: [],
+                error: error.message
+            });
+        }
     }
 });
 
