@@ -9,10 +9,10 @@
     "date": "2025-09-13T11:30:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"home\",\"minute\":2,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":18,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":78,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 31,
+    "goals": "[{\"team\":\"home\",\"minute\":13,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":66,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":80,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 35,
     "rating_category": "Good",
-    "created_at": "2025-09-18T04:41:23.342Z"
+    "created_at": "2025-09-19T01:38:50.774Z"
   },
   {
     "id": 2,
@@ -24,10 +24,10 @@
     "date": "2025-09-13T14:00:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"home\",\"minute\":11,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":80,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":86,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 62,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-18T04:41:23.346Z"
+    "goals": "[{\"team\":\"home\",\"minute\":15,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":37,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":83,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 48,
+    "rating_category": "Good",
+    "created_at": "2025-09-19T01:38:50.777Z"
   },
   {
     "id": 3,
@@ -42,7 +42,7 @@
     "goals": "[]",
     "watchability_score": 0,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.351Z"
+    "created_at": "2025-09-19T01:38:50.781Z"
   },
   {
     "id": 4,
@@ -57,7 +57,7 @@
     "goals": "[]",
     "watchability_score": 0,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.354Z"
+    "created_at": "2025-09-19T01:38:50.785Z"
   },
   {
     "id": 5,
@@ -69,10 +69,10 @@
     "date": "2025-09-13T14:00:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"home\",\"minute\":73,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 5,
+    "goals": "[{\"team\":\"home\",\"minute\":75,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 8,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.358Z"
+    "created_at": "2025-09-19T01:38:50.790Z"
   },
   {
     "id": 6,
@@ -84,10 +84,10 @@
     "date": "2025-09-13T14:00:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"home\",\"minute\":6,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 8,
+    "goals": "[{\"team\":\"home\",\"minute\":53,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 5,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.361Z"
+    "created_at": "2025-09-19T01:38:50.794Z"
   },
   {
     "id": 7,
@@ -99,10 +99,10 @@
     "date": "2025-09-13T16:30:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"away\",\"minute\":1,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":15,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":26,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 31,
-    "rating_category": "Good",
-    "created_at": "2025-09-18T04:41:23.364Z"
+    "goals": "[{\"team\":\"away\",\"minute\":10,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":49,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":67,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 28,
+    "rating_category": "Average",
+    "created_at": "2025-09-19T01:38:50.797Z"
   },
   {
     "id": 8,
@@ -114,10 +114,10 @@
     "date": "2025-09-13T19:00:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"home\",\"minute\":15,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":30,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":50,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":67,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 63,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-18T04:41:23.367Z"
+    "goals": "[{\"team\":\"away\",\"minute\":15,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":53,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":68,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":79,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 59,
+    "rating_category": "Good",
+    "created_at": "2025-09-19T01:38:50.801Z"
   },
   {
     "id": 9,
@@ -129,10 +129,10 @@
     "date": "2025-09-14T13:00:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"away\",\"minute\":12,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "goals": "[{\"team\":\"away\",\"minute\":5,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
     "watchability_score": 8,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.372Z"
+    "created_at": "2025-09-19T01:38:50.805Z"
   },
   {
     "id": 10,
@@ -144,10 +144,10 @@
     "date": "2025-09-14T15:30:00Z",
     "status": "FINISHED",
     "competition": "Premier League",
-    "goals": "[{\"team\":\"home\",\"minute\":19,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":30,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":41,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 25,
-    "rating_category": "Average",
-    "created_at": "2025-09-18T04:41:23.375Z"
+    "goals": "[{\"team\":\"home\",\"minute\":47,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":77,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":85,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 35,
+    "rating_category": "Good",
+    "created_at": "2025-09-19T01:38:50.809Z"
   },
   {
     "id": 11,
@@ -159,10 +159,10 @@
     "date": "2025-09-16T16:45:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":28,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":48,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "goals": "[{\"team\":\"away\",\"minute\":21,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":61,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
     "watchability_score": 15,
     "rating_category": "Average",
-    "created_at": "2025-09-18T04:41:23.378Z"
+    "created_at": "2025-09-19T01:38:50.812Z"
   },
   {
     "id": 12,
@@ -174,10 +174,10 @@
     "date": "2025-09-16T16:45:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":24,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":24,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":32,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":89,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 55,
-    "rating_category": "Good",
-    "created_at": "2025-09-18T04:41:23.381Z"
+    "goals": "[{\"team\":\"home\",\"minute\":2,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":16,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":40,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":76,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 66,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-09-19T01:38:50.815Z"
   },
   {
     "id": 13,
@@ -189,10 +189,10 @@
     "date": "2025-09-16T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":5,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":11,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":14,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":14,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":17,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":25,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":53,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":74,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 80,
+    "goals": "[{\"team\":\"home\",\"minute\":12,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":26,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":38,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":51,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":55,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":55,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":60,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":83,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 83,
     "rating_category": "AMAZING",
-    "created_at": "2025-09-18T04:41:23.383Z"
+    "created_at": "2025-09-19T01:38:50.818Z"
   },
   {
     "id": 14,
@@ -204,10 +204,10 @@
     "date": "2025-09-16T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":32,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":42,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":52,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":60,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":79,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 73,
+    "goals": "[{\"team\":\"home\",\"minute\":18,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":46,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":53,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":66,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":71,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 70,
     "rating_category": "REALLY Good",
-    "created_at": "2025-09-18T04:41:23.388Z"
+    "created_at": "2025-09-19T01:38:50.822Z"
   },
   {
     "id": 15,
@@ -219,10 +219,10 @@
     "date": "2025-09-16T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":33,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "goals": "[{\"team\":\"home\",\"minute\":38,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
     "watchability_score": 5,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.394Z"
+    "created_at": "2025-09-19T01:38:50.825Z"
   },
   {
     "id": 16,
@@ -234,10 +234,10 @@
     "date": "2025-09-16T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":39,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":50,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":66,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "goals": "[{\"team\":\"home\",\"minute\":20,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":28,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":65,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
     "watchability_score": 47,
     "rating_category": "Good",
-    "created_at": "2025-09-18T04:41:23.400Z"
+    "created_at": "2025-09-19T01:38:50.828Z"
   },
   {
     "id": 17,
@@ -249,10 +249,10 @@
     "date": "2025-09-17T16:45:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":12,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":40,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":75,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":77,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 69,
+    "goals": "[{\"team\":\"home\",\"minute\":52,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":53,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":84,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":89,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 70,
     "rating_category": "REALLY Good",
-    "created_at": "2025-09-18T04:41:23.406Z"
+    "created_at": "2025-09-19T01:38:50.833Z"
   },
   {
     "id": 18,
@@ -267,7 +267,7 @@
     "goals": "[]",
     "watchability_score": 0,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-18T04:41:23.412Z"
+    "created_at": "2025-09-19T01:38:50.837Z"
   },
   {
     "id": 19,
@@ -279,10 +279,10 @@
     "date": "2025-09-17T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":61,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":85,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "goals": "[{\"team\":\"away\",\"minute\":44,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":89,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
     "watchability_score": 22,
     "rating_category": "Average",
-    "created_at": "2025-09-18T04:41:23.417Z"
+    "created_at": "2025-09-19T01:38:50.842Z"
   },
   {
     "id": 20,
@@ -294,10 +294,10 @@
     "date": "2025-09-17T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":12,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":37,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":56,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":60,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":66,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 70,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-18T04:41:23.421Z"
+    "goals": "[{\"team\":\"home\",\"minute\":5,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":48,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":52,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":56,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":82,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 78,
+    "rating_category": "AMAZING",
+    "created_at": "2025-09-19T01:38:50.846Z"
   },
   {
     "id": 21,
@@ -309,10 +309,10 @@
     "date": "2025-09-17T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":25,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":75,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":76,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":84,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 48,
+    "goals": "[{\"team\":\"home\",\"minute\":56,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":67,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":85,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":89,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 49,
     "rating_category": "Good",
-    "created_at": "2025-09-18T04:41:23.424Z"
+    "created_at": "2025-09-19T01:38:50.851Z"
   },
   {
     "id": 22,
@@ -324,10 +324,10 @@
     "date": "2025-09-17T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":10,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":30,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":43,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":48,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 53,
-    "rating_category": "Good",
-    "created_at": "2025-09-18T04:41:23.432Z"
+    "goals": "[{\"team\":\"away\",\"minute\":7,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":11,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":20,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":26,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 66,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-09-19T01:38:50.856Z"
   },
   {
     "id": 23,
@@ -339,10 +339,10 @@
     "date": "2025-09-18T16:45:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":18,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":30,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":37,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":84,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 65,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T00:52:57.556Z"
+    "goals": "[{\"team\":\"away\",\"minute\":22,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":22,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":51,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":79,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 56,
+    "rating_category": "Good",
+    "created_at": "2025-09-19T01:38:50.860Z"
   },
   {
     "id": 24,
@@ -354,10 +354,10 @@
     "date": "2025-09-18T16:45:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":2,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":28,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":46,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":65,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":75,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 74,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T00:52:57.562Z"
+    "goals": "[{\"team\":\"home\",\"minute\":18,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":42,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":61,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":66,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":80,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 75,
+    "rating_category": "AMAZING",
+    "created_at": "2025-09-19T01:38:50.864Z"
   },
   {
     "id": 25,
@@ -369,10 +369,10 @@
     "date": "2025-09-18T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"away\",\"minute\":4,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":29,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":55,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 43,
+    "goals": "[{\"team\":\"away\",\"minute\":18,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":61,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":71,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 47,
     "rating_category": "Good",
-    "created_at": "2025-09-19T00:52:57.568Z"
+    "created_at": "2025-09-19T01:38:50.870Z"
   },
   {
     "id": 26,
@@ -384,10 +384,10 @@
     "date": "2025-09-18T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":36,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":49,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "goals": "[{\"team\":\"home\",\"minute\":51,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":74,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
     "watchability_score": 15,
     "rating_category": "Average",
-    "created_at": "2025-09-19T00:52:57.571Z"
+    "created_at": "2025-09-19T01:38:50.876Z"
   },
   {
     "id": 27,
@@ -399,10 +399,10 @@
     "date": "2025-09-18T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":8,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":34,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":44,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":58,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":81,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":90,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 93,
-    "rating_category": "ALL TIME LEGENDARY",
-    "created_at": "2025-09-19T00:52:57.578Z"
+    "goals": "[{\"team\":\"home\",\"minute\":1,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":2,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":25,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":42,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":56,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":64,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 71,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-09-19T01:38:50.879Z"
   },
   {
     "id": 28,
@@ -414,9 +414,9 @@
     "date": "2025-09-18T19:00:00Z",
     "status": "FINISHED",
     "competition": "UEFA Champions League",
-    "goals": "[{\"team\":\"home\",\"minute\":14,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":37,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":45,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":62,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":84,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
-    "watchability_score": 78,
+    "goals": "[{\"team\":\"home\",\"minute\":7,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"away\",\"minute\":25,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":44,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":79,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"},{\"team\":\"home\",\"minute\":83,\"scorer\":\"Unknown\",\"type\":\"REGULAR\"}]",
+    "watchability_score": 81,
     "rating_category": "AMAZING",
-    "created_at": "2025-09-19T00:52:57.583Z"
+    "created_at": "2025-09-19T01:38:50.912Z"
   }
 ]
