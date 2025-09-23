@@ -3,37 +3,141 @@ const path = require('path');
 
 class FootballDatabase {
     constructor() {
-        this.dataDir = path.join(__dirname, 'data');
-        this.matchesFile = path.join(this.dataDir, 'matches.json');
-        this.ratingsFile = path.join(this.dataDir, 'ratings.json');
         this.matches = [];
         this.ratings = [];
         this.nextMatchId = 1;
         this.nextRatingId = 1;
+        this.isVercel = process.env.NODE_ENV === 'production' && process.env.VERCEL === '1';
     }
 
     /**
-     * Initialize database and create data directory
+     * Initialize database - use in-memory storage for Vercel compatibility
      */
     async initialize() {
         try {
-            // Create data directory if it doesn't exist
-            if (!fs.existsSync(this.dataDir)) {
-                fs.mkdirSync(this.dataDir, { recursive: true });
-            }
+            if (this.isVercel) {
+                // In Vercel, use in-memory storage only
+                console.log('Connected to in-memory database (Vercel mode)');
+                this.loadInitialData();
+            } else {
+                // In local development, try to load from files
+                this.dataDir = path.join(__dirname, 'data');
+                this.matchesFile = path.join(this.dataDir, 'matches.json');
+                this.ratingsFile = path.join(this.dataDir, 'ratings.json');
+                
+                // Create data directory if it doesn't exist
+                if (!fs.existsSync(this.dataDir)) {
+                    fs.mkdirSync(this.dataDir, { recursive: true });
+                }
 
-            // Load existing data
-            this.loadData();
-            console.log('Connected to JSON database');
+                // Load existing data
+                this.loadData();
+                console.log('Connected to JSON database (local mode)');
+            }
             return Promise.resolve();
         } catch (err) {
             console.error('Error initializing database:', err.message);
-            return Promise.reject(err);
+            // Fallback to in-memory storage
+            console.log('Falling back to in-memory database');
+            this.loadInitialData();
+            return Promise.resolve();
         }
     }
 
     /**
-     * Load data from JSON files
+     * Load initial data for in-memory storage
+     */
+    loadInitialData() {
+        // Initialize with sample data for Vercel deployment
+        this.matches = [
+            {
+                id: 1,
+                api_id: 537817,
+                home_team: "Arsenal FC",
+                away_team: "Nottingham Forest FC",
+                home_score: 3,
+                away_score: 0,
+                date: "2025-09-13T11:30:00Z",
+                status: "FINISHED",
+                competition: "Premier League",
+                goals: '[{"team":"home","minute":13,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":66,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":80,"scorer":"Unknown","type":"REGULAR"}]',
+                watchability_score: 35,
+                rating_category: "Good",
+                created_at: "2025-09-19T01:38:50.774Z"
+            },
+            {
+                id: 2,
+                api_id: 537815,
+                home_team: "AFC Bournemouth",
+                away_team: "Brighton & Hove Albion FC",
+                home_score: 2,
+                away_score: 1,
+                date: "2025-09-13T14:00:00Z",
+                status: "FINISHED",
+                competition: "Premier League",
+                goals: '[{"team":"home","minute":15,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":37,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":83,"scorer":"Unknown","type":"REGULAR"}]',
+                watchability_score: 48,
+                rating_category: "Good",
+                created_at: "2025-09-19T01:38:50.777Z"
+            },
+            {
+                id: 3,
+                api_id: 551941,
+                home_team: "Juventus FC",
+                away_team: "Borussia Dortmund",
+                home_score: 4,
+                away_score: 4,
+                date: "2025-09-16T19:00:00Z",
+                status: "FINISHED",
+                competition: "UEFA Champions League",
+                goals: '[{"team":"home","minute":12,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":26,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":38,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":51,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":55,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":55,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":60,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":83,"scorer":"Unknown","type":"REGULAR"}]',
+                watchability_score: 83,
+                rating_category: "AMAZING",
+                created_at: "2025-09-19T01:38:50.818Z"
+            }
+        ];
+        
+        this.ratings = [
+            {
+                id: 1,
+                match_id: 1,
+                goal_volume_score: 25,
+                goal_timing_score: 6,
+                goal_distribution_score: 4,
+                total_score: 35,
+                rating_category: "Good",
+                created_at: "2025-09-19T01:38:50.774Z"
+            },
+            {
+                id: 2,
+                match_id: 2,
+                goal_volume_score: 25,
+                goal_timing_score: 9,
+                goal_distribution_score: 14,
+                total_score: 48,
+                rating_category: "Good",
+                created_at: "2025-09-19T01:38:50.777Z"
+            },
+            {
+                id: 3,
+                match_id: 3,
+                goal_volume_score: 50,
+                goal_timing_score: 20,
+                goal_distribution_score: 13,
+                total_score: 83,
+                rating_category: "AMAZING",
+                created_at: "2025-09-19T01:38:50.818Z"
+            }
+        ];
+        
+        this.nextMatchId = 4;
+        this.nextRatingId = 4;
+        
+        console.log(`Initialized in-memory database with ${this.matches.length} matches and ${this.ratings.length} ratings`);
+    }
+
+    /**
+     * Load data from JSON files (local development only)
      */
     loadData() {
         try {
@@ -67,9 +171,15 @@ class FootballDatabase {
     }
 
     /**
-     * Save data to JSON files
+     * Save data to JSON files (local development only)
      */
     saveData() {
+        if (this.isVercel) {
+            // In Vercel, data is stored in-memory only
+            console.log('Data saved to in-memory storage');
+            return;
+        }
+        
         try {
             fs.writeFileSync(this.matchesFile, JSON.stringify(this.matches, null, 2));
             fs.writeFileSync(this.ratingsFile, JSON.stringify(this.ratings, null, 2));
@@ -344,4 +454,5 @@ class FootballDatabase {
     }
 }
 
+module.exports = FootballDatabase;
 module.exports = FootballDatabase;
