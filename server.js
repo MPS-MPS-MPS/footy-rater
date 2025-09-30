@@ -307,8 +307,8 @@ app.listen(port, async () => {
     console.log('  POST /api/rate-match - Calculate rating for a match');
     console.log('  GET  /api/rating-categories - Get rating categories');
     
-    // Auto-fetch matches on startup
-    await autoFetchOnStartup();
+    // Auto-fetch matches on startup (disabled to start with clean database)
+    // await autoFetchOnStartup();
 });
 
 // Graceful shutdown

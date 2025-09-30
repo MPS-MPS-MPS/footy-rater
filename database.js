@@ -48,92 +48,13 @@ class FootballDatabase {
      * Load initial data for in-memory storage
      */
     loadInitialData() {
-        // Initialize with sample data for Vercel deployment
-        this.matches = [
-            {
-                id: 1,
-                api_id: 537817,
-                home_team: "Arsenal FC",
-                away_team: "Nottingham Forest FC",
-                home_score: 3,
-                away_score: 0,
-                date: "2025-09-13T11:30:00Z",
-                status: "FINISHED",
-                competition: "Premier League",
-                goals: '[{"team":"home","minute":13,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":66,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":80,"scorer":"Unknown","type":"REGULAR"}]',
-                watchability_score: 35,
-                rating_category: "Good",
-                created_at: "2025-09-19T01:38:50.774Z"
-            },
-            {
-                id: 2,
-                api_id: 537815,
-                home_team: "AFC Bournemouth",
-                away_team: "Brighton & Hove Albion FC",
-                home_score: 2,
-                away_score: 1,
-                date: "2025-09-13T14:00:00Z",
-                status: "FINISHED",
-                competition: "Premier League",
-                goals: '[{"team":"home","minute":15,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":37,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":83,"scorer":"Unknown","type":"REGULAR"}]',
-                watchability_score: 48,
-                rating_category: "Good",
-                created_at: "2025-09-19T01:38:50.777Z"
-            },
-            {
-                id: 3,
-                api_id: 551941,
-                home_team: "Juventus FC",
-                away_team: "Borussia Dortmund",
-                home_score: 4,
-                away_score: 4,
-                date: "2025-09-16T19:00:00Z",
-                status: "FINISHED",
-                competition: "UEFA Champions League",
-                goals: '[{"team":"home","minute":12,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":26,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":38,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":51,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":55,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":55,"scorer":"Unknown","type":"REGULAR"},{"team":"away","minute":60,"scorer":"Unknown","type":"REGULAR"},{"team":"home","minute":83,"scorer":"Unknown","type":"REGULAR"}]',
-                watchability_score: 83,
-                rating_category: "AMAZING",
-                created_at: "2025-09-19T01:38:50.818Z"
-            }
-        ];
+        // Initialize with empty data for clean start
+        this.matches = [];
+        this.ratings = [];
+        this.nextMatchId = 1;
+        this.nextRatingId = 1;
         
-        this.ratings = [
-            {
-                id: 1,
-                match_id: 1,
-                goal_volume_score: 25,
-                goal_timing_score: 6,
-                goal_distribution_score: 4,
-                total_score: 35,
-                rating_category: "Good",
-                created_at: "2025-09-19T01:38:50.774Z"
-            },
-            {
-                id: 2,
-                match_id: 2,
-                goal_volume_score: 25,
-                goal_timing_score: 9,
-                goal_distribution_score: 14,
-                total_score: 48,
-                rating_category: "Good",
-                created_at: "2025-09-19T01:38:50.777Z"
-            },
-            {
-                id: 3,
-                match_id: 3,
-                goal_volume_score: 50,
-                goal_timing_score: 20,
-                goal_distribution_score: 13,
-                total_score: 83,
-                rating_category: "AMAZING",
-                created_at: "2025-09-19T01:38:50.818Z"
-            }
-        ];
-        
-        this.nextMatchId = 4;
-        this.nextRatingId = 4;
-        
-        console.log(`Initialized in-memory database with ${this.matches.length} matches and ${this.ratings.length} ratings`);
+        console.log(`Initialized in-memory database with empty data`);
     }
 
     /**

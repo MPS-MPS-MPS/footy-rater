@@ -2,52 +2,52 @@
   {
     "id": 1,
     "match_id": 1,
-    "goal_volume_score": 25,
-    "goal_timing_score": 8,
-    "goal_distribution_score": 2,
-    "total_score": 35,
+    "goal_volume_score": 35,
+    "goal_timing_score": 0,
+    "goal_distribution_score": 15,
+    "total_score": 50,
     "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.774Z"
+    "created_at": "2025-09-30T03:17:18.638Z"
   },
   {
     "id": 2,
     "match_id": 2,
     "goal_volume_score": 25,
-    "goal_timing_score": 8,
+    "goal_timing_score": 6,
     "goal_distribution_score": 15,
-    "total_score": 48,
+    "total_score": 46,
     "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.777Z"
+    "created_at": "2025-09-30T03:17:18.641Z"
   },
   {
     "id": 3,
     "match_id": 3,
-    "goal_volume_score": 0,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 0,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.782Z"
+    "goal_volume_score": 35,
+    "goal_timing_score": 3,
+    "goal_distribution_score": 25,
+    "total_score": 63,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-09-30T03:17:18.644Z"
   },
   {
     "id": 4,
     "match_id": 4,
-    "goal_volume_score": 0,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 0,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.785Z"
+    "goal_volume_score": 35,
+    "goal_timing_score": 5,
+    "goal_distribution_score": 18,
+    "total_score": 58,
+    "rating_category": "Good",
+    "created_at": "2025-09-30T03:17:18.647Z"
   },
   {
     "id": 5,
     "match_id": 5,
-    "goal_volume_score": 5,
-    "goal_timing_score": 3,
-    "goal_distribution_score": 0,
-    "total_score": 8,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.790Z"
+    "goal_volume_score": 50,
+    "goal_timing_score": 12,
+    "goal_distribution_score": 15,
+    "total_score": 77,
+    "rating_category": "AMAZING",
+    "created_at": "2025-09-30T03:17:18.650Z"
   },
   {
     "id": 6,
@@ -57,326 +57,46 @@
     "goal_distribution_score": 0,
     "total_score": 5,
     "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.794Z"
+    "created_at": "2025-09-30T03:17:18.653Z"
   },
   {
     "id": 7,
     "match_id": 7,
-    "goal_volume_score": 25,
-    "goal_timing_score": 3,
-    "goal_distribution_score": 0,
-    "total_score": 28,
-    "rating_category": "Average",
-    "created_at": "2025-09-19T01:38:50.798Z"
+    "goal_volume_score": 15,
+    "goal_timing_score": 0,
+    "goal_distribution_score": 18,
+    "total_score": 33,
+    "rating_category": "Good",
+    "created_at": "2025-09-30T03:17:18.656Z"
   },
   {
     "id": 8,
     "match_id": 8,
     "goal_volume_score": 35,
     "goal_timing_score": 6,
-    "goal_distribution_score": 18,
-    "total_score": 59,
-    "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.801Z"
+    "goal_distribution_score": 19,
+    "total_score": 60,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-09-30T03:17:18.660Z"
   },
   {
     "id": 9,
     "match_id": 9,
-    "goal_volume_score": 5,
-    "goal_timing_score": 3,
-    "goal_distribution_score": 0,
-    "total_score": 8,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.805Z"
+    "goal_volume_score": 25,
+    "goal_timing_score": 13,
+    "goal_distribution_score": 24,
+    "total_score": 62,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-09-30T03:17:18.664Z"
   },
   {
     "id": 10,
     "match_id": 10,
-    "goal_volume_score": 25,
-    "goal_timing_score": 8,
-    "goal_distribution_score": 2,
-    "total_score": 35,
-    "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.809Z"
-  },
-  {
-    "id": 11,
-    "match_id": 11,
-    "goal_volume_score": 15,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 15,
-    "rating_category": "Average",
-    "created_at": "2025-09-19T01:38:50.812Z"
-  },
-  {
-    "id": 12,
-    "match_id": 12,
-    "goal_volume_score": 35,
-    "goal_timing_score": 6,
-    "goal_distribution_score": 25,
-    "total_score": 66,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T01:38:50.815Z"
-  },
-  {
-    "id": 13,
-    "match_id": 13,
-    "goal_volume_score": 50,
-    "goal_timing_score": 8,
-    "goal_distribution_score": 25,
-    "total_score": 83,
-    "rating_category": "AMAZING",
-    "created_at": "2025-09-19T01:38:50.818Z"
-  },
-  {
-    "id": 14,
-    "match_id": 14,
-    "goal_volume_score": 45,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 25,
-    "total_score": 70,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T01:38:50.822Z"
-  },
-  {
-    "id": 15,
-    "match_id": 15,
-    "goal_volume_score": 5,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 5,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.825Z"
-  },
-  {
-    "id": 16,
-    "match_id": 16,
-    "goal_volume_score": 25,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 22,
-    "total_score": 47,
-    "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.828Z"
-  },
-  {
-    "id": 17,
-    "match_id": 17,
-    "goal_volume_score": 35,
-    "goal_timing_score": 10,
-    "goal_distribution_score": 25,
-    "total_score": 70,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T01:38:50.833Z"
-  },
-  {
-    "id": 18,
-    "match_id": 18,
-    "goal_volume_score": 0,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 0,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-19T01:38:50.837Z"
-  },
-  {
-    "id": 19,
-    "match_id": 19,
-    "goal_volume_score": 15,
-    "goal_timing_score": 5,
-    "goal_distribution_score": 2,
-    "total_score": 22,
-    "rating_category": "Average",
-    "created_at": "2025-09-19T01:38:50.842Z"
-  },
-  {
-    "id": 20,
-    "match_id": 20,
-    "goal_volume_score": 45,
-    "goal_timing_score": 8,
-    "goal_distribution_score": 25,
-    "total_score": 78,
-    "rating_category": "AMAZING",
-    "created_at": "2025-09-19T01:38:50.846Z"
-  },
-  {
-    "id": 21,
-    "match_id": 21,
-    "goal_volume_score": 35,
-    "goal_timing_score": 10,
-    "goal_distribution_score": 4,
-    "total_score": 49,
-    "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.851Z"
-  },
-  {
-    "id": 22,
-    "match_id": 22,
-    "goal_volume_score": 35,
-    "goal_timing_score": 6,
-    "goal_distribution_score": 25,
-    "total_score": 66,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T01:38:50.857Z"
-  },
-  {
-    "id": 23,
-    "match_id": 23,
-    "goal_volume_score": 35,
-    "goal_timing_score": 3,
-    "goal_distribution_score": 18,
-    "total_score": 56,
-    "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.860Z"
-  },
-  {
-    "id": 24,
-    "match_id": 24,
-    "goal_volume_score": 45,
-    "goal_timing_score": 5,
-    "goal_distribution_score": 25,
-    "total_score": 75,
-    "rating_category": "AMAZING",
-    "created_at": "2025-09-19T01:38:50.864Z"
-  },
-  {
-    "id": 25,
-    "match_id": 25,
-    "goal_volume_score": 25,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 22,
-    "total_score": 47,
-    "rating_category": "Good",
-    "created_at": "2025-09-19T01:38:50.870Z"
-  },
-  {
-    "id": 26,
-    "match_id": 26,
-    "goal_volume_score": 15,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 15,
-    "rating_category": "Average",
-    "created_at": "2025-09-19T01:38:50.876Z"
-  },
-  {
-    "id": 27,
-    "match_id": 27,
-    "goal_volume_score": 50,
-    "goal_timing_score": 6,
-    "goal_distribution_score": 15,
-    "total_score": 71,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-19T01:38:50.879Z"
-  },
-  {
-    "id": 28,
-    "match_id": 28,
-    "goal_volume_score": 45,
-    "goal_timing_score": 11,
-    "goal_distribution_score": 25,
-    "total_score": 81,
-    "rating_category": "AMAZING",
-    "created_at": "2025-09-19T01:38:50.912Z"
-  },
-  {
-    "id": 29,
-    "match_id": 29,
-    "goal_volume_score": 25,
-    "goal_timing_score": 6,
-    "goal_distribution_score": 15,
-    "total_score": 46,
-    "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.735Z"
-  },
-  {
-    "id": 30,
-    "match_id": 30,
-    "goal_volume_score": 35,
-    "goal_timing_score": 6,
-    "goal_distribution_score": 25,
-    "total_score": 66,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-23T05:10:45.739Z"
-  },
-  {
-    "id": 31,
-    "match_id": 31,
     "goal_volume_score": 15,
     "goal_timing_score": 0,
     "goal_distribution_score": 18,
     "total_score": 33,
     "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.744Z"
-  },
-  {
-    "id": 32,
-    "match_id": 32,
-    "goal_volume_score": 25,
-    "goal_timing_score": 9,
-    "goal_distribution_score": 22,
-    "total_score": 56,
-    "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.748Z"
-  },
-  {
-    "id": 33,
-    "match_id": 33,
-    "goal_volume_score": 35,
-    "goal_timing_score": 5,
-    "goal_distribution_score": 15,
-    "total_score": 55,
-    "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.752Z"
-  },
-  {
-    "id": 34,
-    "match_id": 34,
-    "goal_volume_score": 25,
-    "goal_timing_score": 5,
-    "goal_distribution_score": 24,
-    "total_score": 54,
-    "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.755Z"
-  },
-  {
-    "id": 35,
-    "match_id": 35,
-    "goal_volume_score": 35,
-    "goal_timing_score": 11,
-    "goal_distribution_score": 25,
-    "total_score": 71,
-    "rating_category": "REALLY Good",
-    "created_at": "2025-09-23T05:10:45.759Z"
-  },
-  {
-    "id": 36,
-    "match_id": 36,
-    "goal_volume_score": 0,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 0,
-    "total_score": 0,
-    "rating_category": "Very Poor",
-    "created_at": "2025-09-23T05:10:45.763Z"
-  },
-  {
-    "id": 37,
-    "match_id": 37,
-    "goal_volume_score": 15,
-    "goal_timing_score": 0,
-    "goal_distribution_score": 18,
-    "total_score": 33,
-    "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.768Z"
-  },
-  {
-    "id": 38,
-    "match_id": 38,
-    "goal_volume_score": 15,
-    "goal_timing_score": 10,
-    "goal_distribution_score": 18,
-    "total_score": 43,
-    "rating_category": "Good",
-    "created_at": "2025-09-23T05:10:45.772Z"
+    "created_at": "2025-09-30T03:17:18.667Z"
   }
 ]
