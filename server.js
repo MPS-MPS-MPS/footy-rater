@@ -32,13 +32,14 @@ const database = new FootballDatabase();
 
 // Initialize database
 let dbInitialized = false;
+console.log('⏳ Starting database initialization...');
 database.initialize()
     .then(() => {
         dbInitialized = true;
-        console.log('Database initialized successfully');
+        console.log('✅ Database initialized and marked as ready');
     })
     .catch((err) => {
-        console.error('Database initialization failed:', err);
+        console.error('❌ Database initialization failed:', err);
         dbInitialized = false;
     });
 

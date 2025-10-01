@@ -15,6 +15,7 @@ class FootballDatabase {
      */
     async initialize() {
         try {
+            console.log('🚀 Initializing database...');
             if (this.isVercel) {
                 // In Vercel, use in-memory storage only
                 console.log('Connected to in-memory database (Vercel mode)');
@@ -25,18 +26,27 @@ class FootballDatabase {
                 this.matchesFile = path.join(this.dataDir, 'matches.json');
                 this.ratingsFile = path.join(this.dataDir, 'ratings.json');
                 
+                console.log('📁 Data directory:', this.dataDir);
+                
                 // Create data directory if it doesn't exist
                 if (!fs.existsSync(this.dataDir)) {
+                    console.log('📁 Creating data directory...');
                     fs.mkdirSync(this.dataDir, { recursive: true });
                 }
 
-                // Load existing data
+                // Load existing data SYNCHRONOUSLY to ensure it's loaded before we continue
                 this.loadData();
-                console.log('Connected to JSON database (local mode)');
+                console.log(`✅ Database initialized with ${this.matches.length} matches and ${this.ratings.length} ratings`);
             }
+            
+            // Add a small delay to ensure everything is settled
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            console.log('✅ Database initialization complete and ready!');
             return Promise.resolve();
         } catch (err) {
-            console.error('Error initializing database:', err.message);
+            console.error('❌ Error initializing database:', err.message);
+            console.error(err.stack);
             // Fallback to in-memory storage
             console.log('Falling back to in-memory database');
             this.loadInitialData();
