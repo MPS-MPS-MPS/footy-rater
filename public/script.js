@@ -6,6 +6,9 @@ let ratingCategories = [];
 document.addEventListener('DOMContentLoaded', function() {
     checkHealth();
     loadRatingCategories();
+    // Immediately load existing matches from database
+    loadMatches();
+    // Then fetch new matches in the background
     autoFetchMatches();
 });
 
