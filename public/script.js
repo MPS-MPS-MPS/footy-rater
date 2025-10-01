@@ -3,29 +3,43 @@ let currentTab = 'matches';
 let ratingCategories = [];
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
-    checkHealth();
+document.addEventListener('DOMContentLoaded', async function() {
+    const isHealthy = await checkHealth();
     loadRatingCategories();
-    // Immediately load existing matches from database
-    loadMatches();
-    // Then fetch new matches in the background
-    autoFetchMatches();
+    
+    if (isHealthy) {
+        // Load existing matches from database
+        loadMatches();
+        // Then fetch new matches in the background
+        autoFetchMatches();
+    }
 });
 
 // Check server health
 async function checkHealth() {
     try {
         console.log('Checking server health...');
-        const response = await fetch('/api/health');
-        const health = await response.json();
-        console.log('Health check:', health);
-        
-        if (health.database === 'not initialized') {
+        let retries = 0;
+        while (retries < 5) {
+            const response = await fetch('/api/health');
+            const health = await response.json();
+            console.log('Health check:', health);
+            
+            if (health.database === 'initialized') {
+                console.log('Database is ready!');
+                return true;
+            }
+            
             updateStatus('Database initializing...', 'loading');
+            await new Promise(resolve => setTimeout(resolve, 500));
+            retries++;
         }
+        updateStatus('Database initialization timeout', 'error');
+        return false;
     } catch (error) {
         console.error('Health check failed:', error);
         updateStatus('Server connection failed', 'error');
+        return false;
     }
 }
 

@@ -62,29 +62,44 @@ class FootballDatabase {
      */
     loadData() {
         try {
+            console.log('📁 Loading data from files...');
+            console.log('📁 Matches file path:', this.matchesFile);
+            console.log('📁 Ratings file path:', this.ratingsFile);
+            
             // Load matches
             if (fs.existsSync(this.matchesFile)) {
+                console.log('📁 Matches file exists, reading...');
                 const matchesData = fs.readFileSync(this.matchesFile, 'utf8');
                 this.matches = JSON.parse(matchesData);
+                console.log(`📁 Loaded ${this.matches.length} matches from file`);
                 // Set next ID based on existing data
                 if (this.matches.length > 0) {
                     this.nextMatchId = Math.max(...this.matches.map(m => m.id)) + 1;
                 }
+            } else {
+                console.log('📁 Matches file does not exist');
+                this.matches = [];
             }
 
             // Load ratings
             if (fs.existsSync(this.ratingsFile)) {
+                console.log('📁 Ratings file exists, reading...');
                 const ratingsData = fs.readFileSync(this.ratingsFile, 'utf8');
                 this.ratings = JSON.parse(ratingsData);
+                console.log(`📁 Loaded ${this.ratings.length} ratings from file`);
                 // Set next ID based on existing data
                 if (this.ratings.length > 0) {
                     this.nextRatingId = Math.max(...this.ratings.map(r => r.id)) + 1;
                 }
+            } else {
+                console.log('📁 Ratings file does not exist');
+                this.ratings = [];
             }
 
-            console.log(`Loaded ${this.matches.length} matches and ${this.ratings.length} ratings`);
+            console.log(`✅ Successfully loaded ${this.matches.length} matches and ${this.ratings.length} ratings into memory`);
         } catch (err) {
-            console.error('Error loading data:', err.message);
+            console.error('❌ Error loading data:', err.message);
+            console.error(err.stack);
             // Initialize empty arrays if files don't exist or are corrupted
             this.matches = [];
             this.ratings = [];
@@ -188,7 +203,8 @@ class FootballDatabase {
     async getAllMatches() {
         try {
             console.log('🔍 Executing query to get all matches...');
-            console.log(`🔍 Database returned ${this.matches.length} raw rows`);
+            console.log(`🔍 Database has ${this.matches.length} matches in memory`);
+            console.log(`🔍 Database has ${this.ratings.length} ratings in memory`);
             
             const processedMatches = this.matches.map(match => {
                 console.log(`🔍 Processing row: ${match.home_team} vs ${match.away_team}, Rating: ${match.watchability_score}`);
