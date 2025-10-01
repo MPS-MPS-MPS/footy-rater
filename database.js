@@ -212,6 +212,11 @@ class FootballDatabase {
      */
     async getAllMatches() {
         try {
+            // Reload data from files to ensure we have latest (important for serverless)
+            if (!this.isVercel) {
+                this.loadData();
+            }
+            
             console.log('🔍 Executing query to get all matches...');
             console.log(`🔍 Database has ${this.matches.length} matches in memory`);
             console.log(`🔍 Database has ${this.ratings.length} ratings in memory`);
@@ -270,6 +275,11 @@ class FootballDatabase {
      */
     async getMatchesByCompetition(competition) {
         try {
+            // Reload data from files to ensure we have latest (important for serverless)
+            if (!this.isVercel) {
+                this.loadData();
+            }
+            
             console.log('🔍 Executing query to get matches by competition...');
             
             let filteredMatches = this.matches;
@@ -339,6 +349,11 @@ class FootballDatabase {
      */
     async getTopRatedMatches(limit = 10) {
         try {
+            // Reload data from files to ensure we have latest (important for serverless)
+            if (!this.isVercel) {
+                this.loadData();
+            }
+            
             console.log('🔍 Executing query to get top rated matches...');
             
             // Sort matches by watchability score descending
