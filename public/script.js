@@ -94,6 +94,7 @@ async function loadMatches() {
         
         const matches = await response.json();
         console.log('Received matches:', matches.length);
+        console.log('Matches data:', matches);
         displayMatches(matches, container);
     } catch (error) {
         console.error('Error loading matches:', error);
@@ -157,11 +158,14 @@ async function autoFetchMatches() {
         updateStatus(`✅ ${data.message}`, 'success');
         updateLastUpdated();
         
-        // Load all tabs with fresh data
-        loadMatches();
-        loadTopRated();
-        loadCompetitionMatches('Premier League');
-        loadCompetitionMatches('Champions League');
+        // Small delay to ensure database has finished processing
+        setTimeout(() => {
+            // Load all tabs with fresh data
+            loadMatches();
+            loadTopRated();
+            loadCompetitionMatches('Premier League');
+            loadCompetitionMatches('Champions League');
+        }, 500);
         
     } catch (error) {
         console.error('Error fetching matches:', error);

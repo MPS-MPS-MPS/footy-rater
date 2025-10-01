@@ -98,5 +98,95 @@
     "total_score": 33,
     "rating_category": "Good",
     "created_at": "2025-09-30T03:17:18.667Z"
+  },
+  {
+    "id": 11,
+    "match_id": 11,
+    "goal_volume_score": 25,
+    "goal_timing_score": 10,
+    "goal_distribution_score": 15,
+    "total_score": 50,
+    "rating_category": "Good",
+    "created_at": "2025-10-01T01:14:06.878Z"
+  },
+  {
+    "id": 12,
+    "match_id": 12,
+    "goal_volume_score": 45,
+    "goal_timing_score": 10,
+    "goal_distribution_score": 4,
+    "total_score": 59,
+    "rating_category": "Good",
+    "created_at": "2025-10-01T01:14:06.879Z"
+  },
+  {
+    "id": 13,
+    "match_id": 13,
+    "goal_volume_score": 5,
+    "goal_timing_score": 3,
+    "goal_distribution_score": 0,
+    "total_score": 8,
+    "rating_category": "Very Poor",
+    "created_at": "2025-10-01T01:14:06.879Z"
+  },
+  {
+    "id": 14,
+    "match_id": 14,
+    "goal_volume_score": 50,
+    "goal_timing_score": 6,
+    "goal_distribution_score": 25,
+    "total_score": 81,
+    "rating_category": "AMAZING",
+    "created_at": "2025-10-01T01:14:06.880Z"
+  },
+  {
+    "id": 15,
+    "match_id": 15,
+    "goal_volume_score": 35,
+    "goal_timing_score": 8,
+    "goal_distribution_score": 2,
+    "total_score": 45,
+    "rating_category": "Good",
+    "created_at": "2025-10-01T01:14:06.881Z"
+  },
+  {
+    "id": 16,
+    "match_id": 16,
+    "goal_volume_score": 35,
+    "goal_timing_score": 9,
+    "goal_distribution_score": 25,
+    "total_score": 69,
+    "rating_category": "REALLY Good",
+    "created_at": "2025-10-01T01:14:06.882Z"
+  },
+  {
+    "id": 17,
+    "match_id": 17,
+    "goal_volume_score": 50,
+    "goal_timing_score": 5,
+    "goal_distribution_score": 25,
+    "total_score": 80,
+    "rating_category": "AMAZING",
+    "created_at": "2025-10-01T01:14:06.883Z"
+  },
+  {
+    "id": 18,
+    "match_id": 18,
+    "goal_volume_score": 5,
+    "goal_timing_score": 3,
+    "goal_distribution_score": 0,
+    "total_score": 8,
+    "rating_category": "Very Poor",
+    "created_at": "2025-10-01T01:14:06.883Z"
+  },
+  {
+    "id": 19,
+    "match_id": 19,
+    "goal_volume_score": 25,
+    "goal_timing_score": 0,
+    "goal_distribution_score": 0,
+    "total_score": 25,
+    "rating_category": "Average",
+    "created_at": "2025-10-01T01:14:06.884Z"
   }
 ]
